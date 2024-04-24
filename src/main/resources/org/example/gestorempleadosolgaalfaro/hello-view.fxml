@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.gestorempleadosolgaalfaro.HelloController">
     <top>
         <Label text="Gestor empleados" textAlignment="CENTER" BorderPane.alignment="CENTER">
             <font>
@@ -38,7 +38,7 @@
                                 </ComboBox>
                                 <Label text="Salario" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="120.0" />
                                 <TextField fx:id="txtFieldSalario" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="140.0" />
-                                <Button fx:id="btnInsertar" mnemonicParsing="false" text="Insertar" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="210.0" />
+                                <Button fx:id="btnInsertar" mnemonicParsing="false" onAction="#onHelloButtonClick" text="Insertar" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="210.0" />
                             </children>
                         </AnchorPane>
                     </content>
