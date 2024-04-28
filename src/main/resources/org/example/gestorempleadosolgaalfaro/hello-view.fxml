@@ -16,7 +16,7 @@
         </Label>
     </top>
     <center>
-        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <TabPane prefHeight="365.0" prefWidth="563.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
                 <Tab text="Nuevo Empleado">
                     <content>
@@ -55,7 +55,12 @@
                 </Tab>
                 <Tab text="Consultar">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="lstVwNombres" layoutX="7.0" onMouseClicked="#verDetalles" prefHeight="247.0" prefWidth="240.0" />
+                        <Button layoutX="101.0" layoutY="258.0" mnemonicParsing="false" onAction="#verTrabajadores" text="Refrescar" />
+                        <Label fx:id="lblTrabajador" layoutX="273.0" layoutY="7.0" prefHeight="201.0" prefWidth="199.0" />
+                     </children></AnchorPane>
                     </content>
                 </Tab>
             </tabs>

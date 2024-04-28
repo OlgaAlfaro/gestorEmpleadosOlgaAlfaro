@@ -1,14 +1,15 @@
 package org.example.gestorempleadosolgaalfaro;
 
 import Modelo.Trabajador;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.sql.SQLException;
+import java.io.*;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class HelloController {
@@ -18,7 +19,10 @@ public class HelloController {
     private ComboBox<String> cmbBoxPuesto;
     @FXML
     private TextField txtFieldSalario;
-
+    @FXML
+    private ListView lstVwNombres;
+    @FXML
+    private Label lblTrabajador;
 
     @FXML
     protected void onInsertar() throws SQLException {
@@ -44,17 +48,22 @@ public class HelloController {
 
     @FXML
     protected void onCargarDatos() throws SQLException {
-
-        try (FileReader fr = new FileReader("trabajadores.txt")){
-            BufferedReader br = new BufferedReader(fr);
-            String linea = br.readLine();
-            while(linea!=null){
+        Scanner sc = null;
+        try {
+            ClassLoader classLoader = getClass().getClassLoader();
+            sc = new Scanner(new File(classLoader.getResource("trabajadores.txt").getFile()));
+            while(sc.hasNextLine()){
+                String linea = sc.nextLine();
                 Trabajador trabajador = parsearLinea(linea);
                 trabajador.insertarTrabajador(trabajador);
-                linea = br.readLine();
             }
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
+        }
+        finally{
+            if(sc != null){
+                sc.close();
+            }
         }
     }
 
@@ -64,5 +73,57 @@ public class HelloController {
         int sueldo = Integer.parseInt(tokens[2]);
         Trabajador trabajador = new Trabajador(tokens[0], tokens[1], sueldo);
         return trabajador;
+    }
+    @FXML
+    protected void verTrabajadores(){
+        String url = "jdbc:mysql://localhost:3306/bdgestorEmpleados";
+        String user = "root";
+        String pass = "root";
+
+        Connection conexion = null;
+
+        try {
+            conexion = DriverManager.getConnection(url, user, pass);
+            PreparedStatement pst = conexion.prepareStatement("SELECT NOMBRE FROM TRABAJADOR");
+            ResultSet rs = pst.executeQuery();
+            List<String> lista = new ArrayList<>();
+            while(rs.next()){
+                lista.add(rs.getString("NOMBRE"));
+            }
+            ObservableList<String> nombres = FXCollections.observableArrayList(lista);
+            lstVwNombres.setItems(nombres);
+            verDetalles();
+
+        }
+        catch(SQLException e){
+            throw new IllegalStateException("Error al conectar la BD");
+        }
+    }
+
+    @FXML
+    protected void verDetalles(){
+        String url = "jdbc:mysql://localhost:3306/bdgestorEmpleados";
+        String user = "root";
+        String pass = "root";
+
+        Connection conexion = null;
+        try {
+            conexion = DriverManager.getConnection(url, user, pass);
+
+            String nom = (String) lstVwNombres.getSelectionModel().getSelectedItem();
+            PreparedStatement pst = conexion.prepareStatement("SELECT * FROM TRABAJADOR WHERE NOMBRE = '"+nom+"'" );
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()){
+                lblTrabajador.setText(rs.getString("ID") + "\n\n" +
+                                            rs.getString("NOMBRE") + "\n\n" +
+                                            rs.getString("PUESTO") + "\n\n" +
+                                            rs.getString("SALARIO") + "\n\n" +
+                                            rs.getString("FECHA"));
+            }
+
+        }
+        catch(SQLException e){
+            throw new IllegalStateException("Error al conectar la BD");
+        }
     }
 }

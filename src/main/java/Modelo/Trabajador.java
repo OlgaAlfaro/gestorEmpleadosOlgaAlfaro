@@ -1,8 +1,13 @@
 package Modelo;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.Connection;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Trabajador {
     private String nombre;
@@ -52,10 +57,6 @@ public class Trabajador {
         this.fechaAlta = fechaAlta;
     }
 
-    public void conectarbd(){
-
-    }
-
     public void insertarTrabajador(Trabajador trabajador) {
         String url = "jdbc:mysql://localhost:3306/bdgestorEmpleados";
         String user = "root";
@@ -78,15 +79,12 @@ public class Trabajador {
             st.setInt(3, sal);
             st.setDate(4, new Date(fecha.getDayOfMonth()));
             st.executeUpdate();
-
         }
         catch(SQLException e){
             throw new IllegalStateException("Error al conectar la BD");
         }
-
-
-
-
     }
+
+
 
 }
