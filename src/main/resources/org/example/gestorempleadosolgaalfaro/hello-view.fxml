@@ -2,6 +2,7 @@
 
 <?import java.lang.*?>
 <?import javafx.collections.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -38,7 +39,16 @@
                                 </ComboBox>
                                 <Label text="Salario" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="120.0" />
                                 <TextField fx:id="txtFieldSalario" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="140.0" />
-                                <Button fx:id="btnInsertar" mnemonicParsing="false" onAction="#onHelloButtonClick" text="Insertar" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="210.0" />
+                        <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="210.0">
+                           <children>
+                                      <Button fx:id="btnInsertar" mnemonicParsing="false" onAction="#onInsertar" text="Insertar" />
+                              <Button mnemonicParsing="false" onAction="#onCargarDatos" text="Cargar Datos">
+                                 <HBox.margin>
+                                    <Insets left="100.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
                             </children>
                         </AnchorPane>
                     </content>
