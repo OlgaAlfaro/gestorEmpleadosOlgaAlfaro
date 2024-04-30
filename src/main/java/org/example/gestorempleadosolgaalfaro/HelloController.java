@@ -159,6 +159,7 @@ public class HelloController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edicion-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         Stage stage = new Stage();
+        stage.setTitle("Modificar empleado");
         stage.setScene(scene);
         stage.show();
     }
