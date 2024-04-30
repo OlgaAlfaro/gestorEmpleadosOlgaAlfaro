@@ -60,6 +60,20 @@
                         <ListView fx:id="lstVwNombres" layoutX="7.0" onMouseClicked="#verDetalles" prefHeight="247.0" prefWidth="240.0" />
                         <Button layoutX="101.0" layoutY="258.0" mnemonicParsing="false" onAction="#verTrabajadores" text="Refrescar" />
                         <Label fx:id="lblTrabajador" layoutX="273.0" layoutY="7.0" prefHeight="201.0" prefWidth="199.0" />
+                        <HBox layoutX="273.0" layoutY="208.0" prefHeight="38.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#onEditar" text="Editar">
+                                 <HBox.margin>
+                                    <Insets top="15.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#onEliminar" text="Eliminar" textFill="#e10707">
+                                 <HBox.margin>
+                                    <Insets left="80.0" top="15.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children></AnchorPane>
                     </content>
                 </Tab>

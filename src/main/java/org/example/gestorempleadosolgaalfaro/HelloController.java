@@ -4,7 +4,10 @@ import Modelo.Trabajador;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.sql.*;
@@ -125,5 +128,38 @@ public class HelloController {
         catch(SQLException e){
             throw new IllegalStateException("Error al conectar la BD");
         }
+    }
+
+    @FXML
+    protected void onEliminar(){
+        String url = "jdbc:mysql://localhost:3306/bdgestorEmpleados";
+        String user = "root";
+        String pass = "root";
+
+        Connection conexion = null;
+        try {
+            conexion = DriverManager.getConnection(url, user, pass);
+
+            String nom = (String) lstVwNombres.getSelectionModel().getSelectedItem();
+            PreparedStatement pst = conexion.prepareStatement("SET sql_safe_updates=0;");
+            pst.executeUpdate();
+            PreparedStatement pst1 = conexion.prepareStatement("DELETE FROM trabajador WHERE NOMBRE = ?");
+            pst1.setString(1, nom);
+            pst1.executeUpdate();
+            PreparedStatement pst2 = conexion.prepareStatement("SET sql_safe_updates=1;");
+            pst2.executeUpdate();
+        }
+        catch(SQLException e){
+            throw new IllegalStateException("Error al eliminar un trabajador");
+        }
+    }
+
+    @FXML
+    protected void onEditar() throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edicion-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 }
