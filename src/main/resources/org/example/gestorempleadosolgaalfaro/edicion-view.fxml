@@ -8,7 +8,16 @@
    <children>
       <VBox layoutX="14.0" layoutY="31.0" prefHeight="202.0" prefWidth="406.0">
          <children>
-            <Label fx:id="lblTrabajador" text="id" />
+            <HBox prefHeight="16.0" prefWidth="406.0">
+               <children>
+                  <Label text="Id" />
+                  <Label fx:id="lblIdTrabajador">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
             <Label text="NOMBRE">
                <VBox.margin>
                   <Insets top="10.0" />

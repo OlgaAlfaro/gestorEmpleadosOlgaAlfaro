@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -26,6 +27,7 @@ public class HelloController {
     private ListView lstVwNombres;
     @FXML
     private Label lblTrabajador;
+
 
     @FXML
     protected void onInsertar() throws SQLException {
@@ -157,10 +159,15 @@ public class HelloController {
     @FXML
     protected void onEditar() throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edicion-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        fxmlLoader.load();
+        String nom = (String) lstVwNombres.getSelectionModel().getSelectedItem();
+        EdicionController document = fxmlLoader.getController();
+        document.mostrar(nom);
+        Parent p = fxmlLoader.getRoot();
         Stage stage = new Stage();
+        stage.setScene(new Scene(p));
         stage.setTitle("Modificar empleado");
-        stage.setScene(scene);
         stage.show();
+
     }
 }
