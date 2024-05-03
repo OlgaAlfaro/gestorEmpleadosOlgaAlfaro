@@ -40,7 +40,7 @@
       </VBox>
       <HBox alignment="CENTER" layoutX="16.0" layoutY="209.0" prefHeight="191.0" prefWidth="406.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="177.60000000000002" AnchorPane.topAnchor="209.0">
          <children>
-            <Button fx:id="btnModificar" mnemonicParsing="false" text="Modificar">
+            <Button fx:id="btnModificar" mnemonicParsing="false" onAction="#onModificar" text="Modificar">
                <HBox.margin>
                   <Insets />
                </HBox.margin></Button>
@@ -48,7 +48,7 @@
                <padding>
                   <Insets left="20.0" right="20.0" />
                </padding></Separator>
-            <Button fx:id="btnCancelar" mnemonicParsing="false" text="Cancelar" />
+            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#onCancelar" text="Cancelar" />
          </children>
       </HBox>
    </children>

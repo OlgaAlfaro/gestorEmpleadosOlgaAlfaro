@@ -1,13 +1,9 @@
 package Modelo;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import java.sql.Connection;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class Trabajador {
     private String nombre;
@@ -75,9 +71,9 @@ public class Trabajador {
             st.setString(1, nom);
             st.setString(2, pue);
             st.setInt(3, sal);
-            st.setDate(4, new Date(fecha.getDayOfMonth()));
+            st.setDate(4, Date.valueOf(fecha));
             st.executeUpdate();
-
+            conexion.close();
         }
         catch(SQLException e){
             throw new IllegalStateException("Error al conectar la BD");

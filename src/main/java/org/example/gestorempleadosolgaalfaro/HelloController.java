@@ -47,6 +47,7 @@ public class HelloController {
             alerta.setHeaderText("Mensaje");
             alerta.setContentText("Empleado " + nombre + " introducido en la base de datos satisfactoriamente.");
             alerta.showAndWait();
+            verTrabajadores();
         }
 
     }
@@ -62,6 +63,7 @@ public class HelloController {
                 Trabajador trabajador = parsearLinea(linea);
                 trabajador.insertarTrabajador(trabajador);
             }
+            verTrabajadores();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -98,7 +100,7 @@ public class HelloController {
             ObservableList<String> nombres = FXCollections.observableArrayList(lista);
             lstVwNombres.setItems(nombres);
             verDetalles();
-
+            conexion.close();
         }
         catch(SQLException e){
             throw new IllegalStateException("Error al conectar la BD");
@@ -125,7 +127,7 @@ public class HelloController {
                                             rs.getString("SALARIO") + "\n\n" +
                                             rs.getString("FECHA"));
             }
-
+            conexion.close();
         }
         catch(SQLException e){
             throw new IllegalStateException("Error al conectar la BD");
@@ -150,6 +152,7 @@ public class HelloController {
             pst1.executeUpdate();
             PreparedStatement pst2 = conexion.prepareStatement("SET sql_safe_updates=1;");
             pst2.executeUpdate();
+            conexion.close();
         }
         catch(SQLException e){
             throw new IllegalStateException("Error al eliminar un trabajador");
