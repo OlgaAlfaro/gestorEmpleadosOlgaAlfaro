@@ -11,7 +11,7 @@ public class Trabajador {
     private int salario;
     private LocalDate fechaAlta;
 
-    public Trabajador(String nombre, String puesto, int salario) throws SQLException {
+    public Trabajador(String nombre, String puesto, int salario){
         this.nombre = nombre;
         this.puesto = puesto;
         this.salario = salario;

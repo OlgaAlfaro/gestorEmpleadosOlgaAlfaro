@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class HelloController {
+public class InsertarController {
     @FXML
     private TextField txtFieldNombre;
     @FXML
@@ -30,16 +30,29 @@ public class HelloController {
 
 
     @FXML
-    protected void onInsertar() throws SQLException {
-        String nombre = txtFieldNombre.getText();
-        String puesto = cmbBoxPuesto.getValue();
-        Integer salario = Integer.valueOf(txtFieldSalario.getText());
-        if(nombre == null || puesto == null || salario == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+    protected void onInsertar() {
+        if(txtFieldNombre.getText().isEmpty() || txtFieldSalario.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setContentText("Todos los campos deben estar rellenados");
+            alert.showAndWait();
+        }
+        else if(cmbBoxPuesto.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setContentText("Todos los campos deben estar rellenados");
+            alert.showAndWait();
+        }
+        else if(txtFieldSalario.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setContentText("Todos los campos deben estar rellenados");
+            alert.showAndWait();
         }
         else{
+            String nombre = txtFieldNombre.getText();
+            String puesto = cmbBoxPuesto.getValue();
+            Integer salario = Integer.valueOf(txtFieldSalario.getText());
             Trabajador trabajador = new Trabajador(nombre, puesto, salario);
             trabajador.insertarTrabajador(trabajador);
             Alert alerta = new Alert(Alert.AlertType.INFORMATION);
@@ -81,6 +94,7 @@ public class HelloController {
         Trabajador trabajador = new Trabajador(tokens[0], tokens[1], sueldo);
         return trabajador;
     }
+
     @FXML
     protected void verTrabajadores(){
         String url = "jdbc:mysql://localhost:3306/bdgestorEmpleados";
