@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.sql.*;
+import java.util.Objects;
 
 public class EdicionController {
 
@@ -51,38 +52,48 @@ public class EdicionController {
         String user = "root";
         String pass = "root";
 
-        Connection conexion = null;
-        try {
-            conexion = DriverManager.getConnection(url, user, pass);
+        if(!Objects.equals(txtFldPuesto.getText(), "Scada Manager") && !Objects.equals(txtFldPuesto.getText(), "Sales Manager") && !Objects.equals(txtFldPuesto.getText(), "Product Owner") && !Objects.equals(txtFldPuesto.getText(), "Product Manager") && !Objects.equals(txtFldPuesto.getText(), "Analyst Programmer") && !Objects.equals(txtFldPuesto.getText(), "Junior Programmer")){
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setHeaderText("Introduzca un valor correcto de puesto:");
+            alerta.setContentText("Scada Manager, Sales Manager, Product Owner, Product Manager, Analyst Programmer, o Junior Programmer");
+            alerta.showAndWait();
+        }
+        else{
+            Connection conexion = null;
+            try {
+                conexion = DriverManager.getConnection(url, user, pass);
 
-            PreparedStatement st = conexion.prepareStatement("SELECT ID FROM trabajador WHERE NOMBRE = ?");
-            st.setString(1, nombre1);
-            ResultSet rs = st.executeQuery();
-            int id = 0;
-            while(rs.next()){
-                id = rs.getInt("ID");
+                PreparedStatement st = conexion.prepareStatement("SELECT ID FROM trabajador WHERE NOMBRE = ?");
+                st.setString(1, nombre1);
+                ResultSet rs = st.executeQuery();
+                int id = 0;
+                while(rs.next()){
+                    id = rs.getInt("ID");
+                }
+
+                PreparedStatement pst = conexion.prepareStatement("SET sql_safe_updates=0;");
+                pst.executeUpdate();
+
+                PreparedStatement pst1 = conexion.prepareStatement("UPDATE TRABAJADOR SET NOMBRE = ?, PUESTO = ?, SALARIO = ? WHERE ID = ?");
+                pst1.setString(1, txtFldNombre.getText());
+                pst1.setString(2, txtFldPuesto.getText());
+                pst1.setInt(3, Integer.parseInt(txtFldSal.getText()));
+                pst1.setInt(4, id);
+                pst1.executeUpdate();
+
+                PreparedStatement pst2 = conexion.prepareStatement("SET sql_safe_updates=1;");
+                pst2.executeUpdate();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("Trabajador actualizado con éxito");
+                alert.showAndWait();
+
             }
-
-            PreparedStatement pst = conexion.prepareStatement("SET sql_safe_updates=0;");
-            pst.executeUpdate();
-
-            PreparedStatement pst1 = conexion.prepareStatement("UPDATE TRABAJADOR SET NOMBRE = ?, PUESTO = ?, SALARIO = ? WHERE ID = ?");
-            pst1.setString(1, txtFldNombre.getText());
-            pst1.setString(2, txtFldPuesto.getText());
-            pst1.setInt(3, Integer.parseInt(txtFldSal.getText()));
-            pst1.setInt(4, id);
-            pst1.executeUpdate();
-
-            PreparedStatement pst2 = conexion.prepareStatement("SET sql_safe_updates=1;");
-            pst2.executeUpdate();
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Trabajador actualizado con éxito");
-
+            catch(SQLException e){
+                throw new IllegalStateException("Error al modificar trabajador");
+            }
         }
-        catch(SQLException e){
-            throw new IllegalStateException("Error al modificar trabajador");
-        }
+
     }
 
     @FXML
