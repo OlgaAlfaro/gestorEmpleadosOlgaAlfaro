@@ -66,7 +66,7 @@ public class InsertarController {
     }
 
     @FXML
-    protected void onCargarDatos() throws SQLException {
+    protected void onCargarDatos() {
         Scanner sc = null;
         try {
             ClassLoader classLoader = getClass().getClassLoader();
@@ -88,7 +88,7 @@ public class InsertarController {
     }
 
     @FXML
-    protected static Trabajador parsearLinea(String linea) throws SQLException {
+    protected static Trabajador parsearLinea(String linea) {
         String[] tokens = linea.split(";");
         int sueldo = Integer.parseInt(tokens[2]);
         Trabajador trabajador = new Trabajador(tokens[0], tokens[1], sueldo);
